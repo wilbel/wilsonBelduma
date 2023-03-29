@@ -1,0 +1,64 @@
+{% load static %}
+
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<script type="text/javascript" src="{% static 'js/style.js' %}"></script> 
+
+<div class="container-fluid">
+{%  block content %}
+  {%   if form.errors  %}
+      <div class="alert alert-danger">Error en los datos</div>
+  {%  endif %}
+<div style="padding: 10px 0;background: #CECECE;"><h2 style="text-align: center;"><b> Registrar Persona</b></h2></div>
+  
+<div style="margin:10px 0">
+<a class="btn btn-primary" href="{% url 'persona_lista' %}">Lista</a>
+<a class="btn btn-primary" href="{% url 'registrarPersona' %}">Registrar Persona</a>
+</div>
+
+
+<div class="card" style="padding:20px">
+  <form action="/savePersona/" method="POST" onsubmit="return calcularEdad()">
+    {% csrf_token %}
+    {% if mensaje %}
+        <div class="alert alert-danger">Existe un error con los datos, revisa nuevamente</div>
+    {%  endif %}
+
+    <div class="form-group">
+      <label for="codigo">Id:</label>
+      <input type="number" class="form-control" id="codigo" name="codigo" placeholder="" value="{{ inter.codigo }}" required>
+    </div>
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" placeholder=""  value="{{ inter.nombre }}" required>
+      </div>
+      <div class="form-group">
+        <label for="fechaNacimiento">Fecha de nacimiento:</label>
+        <input onblur="return calcularEdad()" type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento"  value={{ fecha }} required>
+      <div id="mensaje"></div>
+      </div>
+    <div class="form-group">
+      <label for="pais">Pais:</label>
+
+      <input type="hidden" id="codigoNacionalidad" value="0">
+      <select class="form-control" id="txtpais" name="pais"  required >
+        {% for usr in get_pais %}
+        <option value="{{ usr.id  }}">{{ usr.nombre  }} </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+        <label for="nacionalidad">Nacionalidad:</label>
+        <div id="txtnacionalidad1">
+        </div>
+        
+    </div>
+    <br>
+      <button type="submit" class="btn btn-success" >Aceptar</button>
+
+  </form>
+
+</div>
+
+{%  endblock %}
+

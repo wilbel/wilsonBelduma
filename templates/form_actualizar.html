@@ -1,0 +1,52 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<script type="text/javascript" src="{% static 'js/style.js' %}"></script> 
+{%  block content %}
+<div class="container-fluid">
+<div style="padding: 10px 0;background: #CECECE;"><h2 style="text-align: center;"><b> Actualizar datos</b></h2></div>
+<div style="margin:10px 0">
+    <a class="btn btn-primary" href="{% url 'persona_lista' %}">Lista</a>
+    <a class="btn btn-primary" href="{% url 'registrarPersona' %}">Registrar Persona</a>
+</div>
+<div class="card" style="padding:20px">
+<form action="/actualizar/{{ inter.id }}" method="POST"  onsubmit="return calcularEdad()">
+
+    {% csrf_token %}
+    {% if mensaje %}
+        <div class="alert alert-success" > Persona actualizada correctamente</div>
+    {%  endif %}
+
+    <div class="form-group">
+      <label for="codigo">Id:</label>
+      <input type="text" class="form-control" id="codigo" name="codigo" placeholder="" value="{{ inter.codigo }}">
+    </div>
+    <div class="form-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" placeholder=""  value="{{ inter.nombre }}">
+      </div>
+
+      <div class="form-group">
+        <label for="fechaNacimiento">Fecha de nacimiento:</label>
+        <input onblur="return calcularEdad()" type="date" class="form-control" id="fechaNacimiento" name="fechaNacimiento" value={{ fecha }}>
+        <div id="mensaje"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="pais">Pais:</label>
+      <input type="hidden" id="codigoNacionalidad" value="{{   inter.nacionalidad_id }} ">
+      <select class="form-control" id="txtpais" name="pais">
+       
+      </select>
+    </div>
+    <div class="form-group">
+        <label for="nacionalidad">Nacionalidad:</label>
+        <div id="txtnacionalidad1">
+        </div>
+      </div>
+      <br>
+      <button type="submit" class="btn btn-success" >Aceptar</button>
+  </form>
+  </div>
+</div>
+{%  endblock %}

@@ -1,0 +1,32 @@
+{%load static %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<div class="container-fluid" >
+<div style="padding: 10px 0;background: #CECECE;">
+  <h2 style="text-align: center;"><b> LISTA DE USUARIOS</b></h2>
+</div>
+
+  <a style="margin:10px 0" class="btn btn-primary" href="/registrarPersona">Registrar Persona</a>
+
+  <table class="table table-striped table-bordered" >
+    <thead style="background: #CECECE;">
+      <tr>
+        <th class="text-center" scope="col">ID</th>
+        <th class="text-center" scope="col">Nombre</th>
+        <th class="text-center" scope="col">Nacimiento</th>
+        <th class="text-center" scope="col">Pais</th>
+       
+      </tr>
+    </thead>
+    <tbody>
+        {% for usr in get_personas %}
+        <tr>
+        <th > <a href="/form_actualizar/{{ usr.codigo }}"> {{ usr.codigo }}  </a> </th>
+        <td> {{ usr.nombre }}</td>
+        <td> {{ usr.nacimiento }}</td>
+        <td> {{ usr.nacionalidad }}</td>
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
